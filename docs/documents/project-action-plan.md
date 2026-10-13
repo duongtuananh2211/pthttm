@@ -6,7 +6,7 @@
 | --- | --- |
 | Môn học | Phát triển hệ thống thông minh |
 | Tên nhóm | FaceIn |
-| Trưởng nhóm / Các thành viên nhóm | `<Trưởng nhóm>` / `<Thành viên 2>`, `<Thành viên 3>`, `<Thành viên 4>`, `<Thành viên 5>` |
+| Trưởng nhóm / Các thành viên nhóm | `<Trưởng nhóm>` / `<Thành viên 2>`, `<Thành viên 3>` |
 | Tên đề tài | Hệ thống chấm công thông minh bằng nhận diện khuôn mặt |
 
 ## Mục tiêu
@@ -37,7 +37,7 @@ Nhóm làm theo quy trình 10 bước xây dựng và triển khai hệ thống 
 | 6. Data preparation | Phát hiện khuôn mặt, căn chỉnh theo 5 điểm mốc (mắt, mũi, khóe miệng), cắt về 112×112, chuẩn hóa pixel; loại ảnh mờ, ảnh quá tối, ảnh không thấy rõ mặt và các khung hình gần trùng nhau cắt từ cùng một video (lọc nhiễu, ngoại lai). |
 | 7. Modeling | Pipeline gồm 4 khối, chi tiết ở bảng dưới; hai phần nhóm tự huấn luyện mô tả ở mục "Phần huấn luyện". |
 | 8. Evaluation | Đo tỷ lệ nhận diện đúng (rank-1), FAR (nhận nhầm người lạ), FRR (từ chối nhầm người đúng), TAR@FAR; với chống giả mạo đo APCER (tỷ lệ ảnh giả lọt qua) và BPCER (tỷ lệ người thật bị chặn nhầm); đo độ trễ (ms/khung hình). Chọn ngưỡng và siêu tham số trên validation, chỉ chạy tập test một lần ở cuối để tránh overfitting. |
-| 9. Deployment | Đóng gói thành ứng dụng web chạy với webcam: backend API, cơ sở dữ liệu chấm công, màn hình chấm công và trang quản trị. |
+| 9. Deployment | Đóng gói thành một ứng dụng web Streamlit chạy với webcam: giao diện gọi trực tiếp các module Python (nhận diện, chống giả mạo, chấm công) và cơ sở dữ liệu SQLite, không tách backend API riêng để vừa sức nhóm 3 người. Gồm màn hình chấm công và trang quản trị. |
 | 10. Feedback | Cho các thành viên và một nhóm người dùng dùng thử 4 ngày (09–12/11), ghi lại các lần nhận sai, nhận chậm, chặn nhầm để điều chỉnh ngưỡng và bổ sung dữ liệu. Nếu đổi ngưỡng thì đo lại trên tập test. |
 
 **Pipeline mô hình (bước 7):**
@@ -57,7 +57,7 @@ Nhóm làm theo quy trình 10 bước xây dựng và triển khai hệ thống 
 
 Phần chấm công: một người chỉ được ghi nhận khi được nhận diện đúng và qua kiểm tra chống giả mạo trong nhiều khung hình liên tiếp; mỗi người chỉ có một bản ghi trong khoảng thời gian cấu hình (chống ghi trùng); hệ thống tự tính đi muộn/về sớm theo ca làm.
 
-**Công nghệ dự kiến:** Python, OpenCV, InsightFace, PyTorch (fine-tune MiniFASNet), scikit-learn (k-NN, SVM), FastAPI, SQLite, giao diện web bằng Streamlit.
+**Công nghệ dự kiến:** Python, OpenCV, InsightFace, PyTorch (fine-tune MiniFASNet), scikit-learn (k-NN, SVM), SQLite, giao diện web bằng Streamlit (một ứng dụng, không tách frontend/backend).
 
 **Đạo đức AI (chương 3):**
 
@@ -90,11 +90,9 @@ Nếu đạt được, hệ thống giúp doanh nghiệp hoặc nhà trường b
 
 | Thành viên | Vai trò | Công việc chính |
 | --- | --- | --- |
-| `<Trưởng nhóm>` | Trưởng nhóm, kiến trúc hệ thống | Lập kế hoạch và theo dõi WBS, khảo sát nghiệp vụ, thiết kế kiến trúc tổng thể, tích hợp các khối, tổng hợp báo cáo cuối kỳ |
-| `<Thành viên 2>` | Dữ liệu và đánh giá | Thu thập dữ liệu, lấy phiếu đồng ý, làm sạch và gán nhãn, EDA; so sánh với các mô hình baseline; đánh giá khối chống giả mạo; kiểm tra công bằng |
-| `<Thành viên 3>` | Mô hình AI | Pipeline phát hiện, căn chỉnh, trích xuất đặc trưng; chọn ngưỡng; huấn luyện k-NN/SVM trên embedding; fine-tune MiniFASNet; tối ưu độ trễ |
-| `<Thành viên 4>` | Backend và cơ sở dữ liệu | Công cụ chụp ảnh thu dữ liệu, cơ sở dữ liệu, module webcam, API đăng ký/nhận diện, logic ca làm/chống ghi trùng |
-| `<Thành viên 5>` | Giao diện, kiểm thử | Khảo sát nghiệp vụ cùng trưởng nhóm, wireframe, màn hình chấm công và trang quản trị (Streamlit), kịch bản kiểm thử, đo kết quả trên tập test, slide và video demo |
+| `<Trưởng nhóm>` | Trưởng nhóm, kiến trúc và ứng dụng | Lập kế hoạch và theo dõi WBS, khảo sát nghiệp vụ, thiết kế kiến trúc tổng thể; cơ sở dữ liệu, module webcam, module đăng ký/nhận diện, logic ca làm/chống ghi trùng; tích hợp toàn hệ thống; tổng hợp báo cáo cuối kỳ |
+| `<Thành viên 2>` | Dữ liệu, giao diện và đánh giá | Phiếu đồng ý, thu thập, làm sạch, gán nhãn, EDA; so sánh với các mô hình baseline; wireframe, màn hình chấm công và trang quản trị (Streamlit); kịch bản kiểm thử, đo kết quả trên tập test, kiểm tra công bằng |
+| `<Thành viên 3>` | Mô hình AI | Công cụ chụp ảnh thu dữ liệu; pipeline phát hiện, căn chỉnh, trích xuất đặc trưng; chọn ngưỡng; huấn luyện k-NN/SVM trên embedding; fine-tune và đánh giá MiniFASNet; tối ưu độ trễ; slide và video demo |
 
 Mọi thành viên cùng tham gia đóng góp dữ liệu khuôn mặt, kiểm thử chéo, dùng thử hệ thống và viết phần báo cáo của mình.
 
@@ -104,9 +102,9 @@ Dự kiến 4 tuần, mỗi tuần 5 ngày làm việc, bắt đầu 19/10/2026 
 
 | Tuần | Thời gian | Công việc | Mốc / sản phẩm |
 | --- | --- | --- | --- |
-| 1 | 19/10 – 23/10/2026 | Khảo sát nghiệp vụ, phát biểu bài toán, chốt công nghệ; soạn phiếu đồng ý, viết công cụ chụp ảnh; thu dữ liệu buổi A, ảnh giả mạo, buổi B; làm sạch dữ liệu | Mô tả nghiệp vụ, bộ dữ liệu thô hai buổi |
-| 2 | 26/10 – 30/10/2026 | Chia tập theo buổi, EDA; thiết kế kiến trúc; pipeline phát hiện, căn chỉnh, trích xuất embedding; chọn ngưỡng; huấn luyện k-NN/SVM; so sánh baseline; song song thiết kế CSDL, API, wireframe, kịch bản kiểm thử | Mô hình nhận diện đạt mục tiêu trên validation, bảng so sánh mô hình, sơ đồ hệ thống |
-| 3 | 02/11 – 06/11/2026 | Fine-tune và đánh giá chống giả mạo; logic chấm công; màn hình chấm công và trang quản trị; tối ưu độ trễ; tích hợp toàn hệ thống | Bản demo chạy được từ đầu đến cuối |
+| 1 | 19/10 – 23/10/2026 | Khảo sát nghiệp vụ, phát biểu bài toán, chốt công nghệ; soạn phiếu đồng ý, viết công cụ chụp ảnh; thu dữ liệu buổi A, ảnh giả mạo, buổi B; thiết kế kiến trúc; làm sạch dữ liệu | Mô tả nghiệp vụ, sơ đồ hệ thống, bộ dữ liệu thô hai buổi |
+| 2 | 26/10 – 30/10/2026 | Chia tập theo buổi, EDA; pipeline phát hiện, căn chỉnh, trích xuất embedding; chọn ngưỡng; huấn luyện k-NN/SVM; so sánh baseline; song song thiết kế CSDL, module webcam và đăng ký/nhận diện, wireframe, kịch bản kiểm thử | Mô hình nhận diện đạt mục tiêu trên validation, bảng so sánh mô hình |
+| 3 | 02/11 – 06/11/2026 | Fine-tune và đánh giá chống giả mạo; logic chấm công; màn hình chấm công và trang quản trị; tích hợp toàn hệ thống và tối ưu độ trễ | Bản demo chạy được từ đầu đến cuối |
 | 4 | 09/11 – 13/11/2026 | Ngày dự phòng cho vòng lặp sửa lỗi/quay lại Modeling; dùng thử thực tế 4 ngày; kiểm thử trên tập test, kiểm tra công bằng; viết báo cáo, làm slide, tập demo | Bảng kết quả kiểm thử, báo cáo cuối kỳ, slide, video demo |
 
 Kế hoạch chi tiết theo từng task xem [project-work-breakdown-structure.md](project-work-breakdown-structure.md).
