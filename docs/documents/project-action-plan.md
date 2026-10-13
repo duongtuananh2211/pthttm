@@ -5,8 +5,8 @@
 | Mục | Nội dung |
 | --- | --- |
 | Môn học | Phát triển hệ thống thông minh |
-| Tên nhóm | FaceIn |
-| Trưởng nhóm / Các thành viên nhóm | `<Trưởng nhóm>` / `<Thành viên 2>`, `<Thành viên 3>` |
+| Tên nhóm | Nhóm 11 |
+| Trưởng nhóm / Các thành viên nhóm | Dương Tuấn Anh / Trần Lâm Phong, Bùi Như Quỳnh |
 | Tên đề tài | Hệ thống chấm công thông minh bằng nhận diện khuôn mặt |
 
 ## Mục tiêu
@@ -17,7 +17,7 @@
 - Chống gian lận cơ bản: phát hiện việc dùng ảnh in hoặc ảnh trên điện thoại để chấm công hộ (liveness detection), chặn được từ 90% trở lên các lần tấn công trên tập test.
 - Tự huấn luyện hai thành phần: fine-tune mô hình chống giả mạo trên dữ liệu của nhóm, và huấn luyện bộ phân loại trên embedding để so sánh với so khớp cosine.
 - Có giao diện quản trị để đăng ký nhân viên, xem lịch sử chấm công và xuất báo cáo.
-- Đi đủ quy trình 10 bước xây dựng hệ thống thông minh (chương 3) và tuân thủ các nguyên tắc đạo đức AI, nhất là quyền riêng tư và công bằng.
+- Đi đủ quy trình 10 bước xây dựng hệ thống thông minh và tuân thủ các nguyên tắc đạo đức AI, nhất là quyền riêng tư và công bằng.
 
 ## Tóm tắt
 
@@ -25,7 +25,7 @@ Chấm công bằng thẻ hoặc vân tay vẫn có thể bị quẹt thẻ hộ
 
 ## Phương pháp
 
-Nhóm làm theo quy trình 10 bước xây dựng và triển khai hệ thống thông minh (chương 3). Quy trình có tính lặp: nếu kết quả đánh giá hoặc phản hồi chưa đạt thì quay lại bước Modeling hoặc bổ sung dữ liệu; lịch trình có dành một ngày dự phòng cho vòng lặp này.
+Nhóm làm theo quy trình 10 bước xây dựng và triển khai hệ thống thông minh. Quy trình có tính lặp: nếu kết quả đánh giá hoặc phản hồi chưa đạt thì quay lại bước Modeling hoặc bổ sung dữ liệu; lịch trình có dành một ngày dự phòng cho vòng lặp này.
 
 | Bước | Áp dụng vào đề tài |
 | --- | --- |
@@ -59,11 +59,11 @@ Phần chấm công: một người chỉ được ghi nhận khi được nhậ
 
 **Công nghệ dự kiến:** Python, OpenCV, InsightFace, PyTorch (fine-tune MiniFASNet), scikit-learn (k-NN, SVM), SQLite, giao diện web bằng Streamlit (một ứng dụng, không tách frontend/backend).
 
-**Đạo đức AI (chương 3):**
+**Đạo đức AI:**
 
 - *Quyền riêng tư:* ảnh khuôn mặt và embedding đều là dữ liệu sinh trắc học, thuộc nhóm dữ liệu cá nhân nhạy cảm theo quy định bảo vệ dữ liệu cá nhân của Việt Nam. Nhóm chỉ thu thập khi có sự đồng ý bằng văn bản, hệ thống lưu embedding thay cho ảnh gốc, dữ liệu chỉ lưu trên ổ của nhóm.
 - *Tự do / tự chủ:* người tham gia có thể rút lại sự đồng ý bất cứ lúc nào; khi đó toàn bộ ảnh và embedding của họ bị xóa.
-- *Công bằng:* kiểm tra độ chính xác theo từng nhóm (giới tính, đeo kính, khẩu trang, ánh sáng) để phát hiện thiên lệch. Người tham gia chủ yếu là sinh viên Việt Nam nên nhóm không đánh giá được thiên lệch theo màu da; điều này được ghi là một hạn chế trong báo cáo.
+- *Công bằng:* kiểm tra độ chính xác theo từng nhóm (giới tính, đeo kính, khẩu trang, ánh sáng) để phát hiện thiên lệch. Người tham gia chỉ có 6 sinh viên Việt Nam nên nhóm không đánh giá được thiên lệch theo màu da, và so sánh theo giới tính chỉ mang tính tham khảo; điều này được ghi là một hạn chế trong báo cáo.
 - *Minh bạch và trách nhiệm:* hiển thị độ tương đồng và kết quả kiểm tra giả mạo của mỗi lần nhận diện; quản lý có thể sửa bản ghi chấm công sai, mọi chỉnh sửa đều được ghi log.
 - *Nhân phẩm:* hệ thống chỉ dùng để chấm công, không ghi hình liên tục, không dùng để theo dõi hành vi hay đánh giá nhân viên ngoài giờ vào/ra.
 
@@ -73,12 +73,12 @@ Phần chấm công: một người chỉ được ghi nhận khi được nhậ
 | --- | --- | --- |
 | Mô hình huấn luyện sẵn (SCRFD, ArcFace trên MS1M qua InsightFace; MiniFASNet) | Tải từ thư viện mã nguồn mở | Phát hiện khuôn mặt, trích xuất embedding, điểm xuất phát để fine-tune chống giả mạo |
 | LFW (Labeled Faces in the Wild) | Tải công khai | Đánh giá chuẩn bài toán xác minh khuôn mặt, so sánh ArcFace với FaceNet |
-| Bộ dữ liệu tự thu thập | Mỗi thành viên và tình nguyện viên (dự kiến 20–30 người, có ký đồng ý) chụp 20–30 ảnh mỗi buổi qua công cụ chụp webcam của nhóm: nhìn thẳng, nghiêng trái/phải, ngẩng/cúi, đeo/không đeo kính, khẩu trang, ánh sáng trong nhà và gần cửa sổ. Thu hai buổi ở hai ngày và vị trí khác nhau | Đăng ký (enroll), chọn ngưỡng và kiểm thử trong điều kiện thực tế |
+| Bộ dữ liệu tự thu thập | 6 người (3 thành viên và 3 tình nguyện viên, có ký đồng ý), mỗi người chụp 20–30 ảnh mỗi buổi qua công cụ chụp webcam của nhóm: nhìn thẳng, nghiêng trái/phải, ngẩng/cúi, đeo/không đeo kính, khẩu trang, ánh sáng trong nhà và gần cửa sổ. Thu hai buổi ở hai ngày và vị trí khác nhau | Đăng ký (enroll), chọn ngưỡng và kiểm thử trong điều kiện thực tế |
 | Ảnh tấn công giả mạo | Chụp lại ảnh in và ảnh hiển thị trên điện thoại/laptop của chính những người tham gia | Fine-tune và đánh giá khối chống giả mạo |
-| CelebA-Spoof (tập con) | Tải bộ dữ liệu công khai cho nghiên cứu | Bổ sung dữ liệu thật/giả khi fine-tune, vì dữ liệu tự thu của 20–30 người là quá ít |
+| CelebA-Spoof (tập con) | Tải bộ dữ liệu công khai cho nghiên cứu | Bổ sung dữ liệu thật/giả khi fine-tune, vì dữ liệu tự thu của 6 người là quá ít |
 | Ảnh người lạ | Lấy một phần từ LFW hoặc người không đăng ký | Đo FAR: hệ thống phải trả về "Không xác định" |
 
-**Cách dùng dữ liệu tự thu thập:** chia theo buổi thu, không chia ngẫu nhiên theo ảnh, vì các ảnh trong cùng một buổi gần giống nhau và sẽ làm kết quả cao hơn thực tế. Buổi A: mỗi người lấy 5–10 ảnh làm tập đăng ký, phần còn lại làm validation (chọn ngưỡng, siêu tham số). Buổi B: toàn bộ làm tập test để báo cáo kết quả cuối. Ảnh giả mạo cũng chia theo người, người đã có trong tập test thì không xuất hiện trong tập fine-tune. Tập test dự kiến chỉ khoảng 200–300 ảnh nên kết quả có sai số cỡ ±3%; báo cáo sẽ ghi rõ cỡ mẫu. Làm sạch theo chương 3: bỏ ảnh mờ, ảnh trùng lặp, ảnh không phát hiện được khuôn mặt; đặt tên file và nhãn theo một quy ước thống nhất. Dữ liệu không công khai và được xóa sau khi kết thúc môn học.
+**Cách dùng dữ liệu tự thu thập:** chia theo buổi thu, không chia ngẫu nhiên theo ảnh, vì các ảnh trong cùng một buổi gần giống nhau và sẽ làm kết quả cao hơn thực tế. Buổi A: mỗi người lấy 5–10 ảnh làm tập đăng ký, phần còn lại làm validation (chọn ngưỡng, siêu tham số). Buổi B: toàn bộ làm tập test để báo cáo kết quả cuối. Ảnh giả mạo cũng chia theo người: ảnh của 4 người dùng để fine-tune, ảnh của 2 người còn lại chỉ dùng để đánh giá. Vì chỉ có 6 danh tính, nhóm thêm embedding của khoảng 100 người trong LFW vào tập đăng ký làm danh tính gây nhiễu để bài toán định danh không quá dễ. Tập test dự kiến chỉ khoảng 120–180 ảnh (6 người × 20–30 ảnh) nên kết quả có sai số cỡ ±4%; báo cáo sẽ ghi rõ cỡ mẫu. Làm sạch theo chương 3: bỏ ảnh mờ, ảnh trùng lặp, ảnh không phát hiện được khuôn mặt; đặt tên file và nhãn theo một quy ước thống nhất. Dữ liệu không công khai và được xóa sau khi kết thúc môn học.
 
 ## Đầu ra mong muốn đạt được
 
@@ -90,9 +90,9 @@ Nếu đạt được, hệ thống giúp doanh nghiệp hoặc nhà trường b
 
 | Thành viên | Vai trò | Công việc chính |
 | --- | --- | --- |
-| `<Trưởng nhóm>` | Trưởng nhóm, kiến trúc và ứng dụng | Lập kế hoạch và theo dõi WBS, khảo sát nghiệp vụ, thiết kế kiến trúc tổng thể; cơ sở dữ liệu, module webcam, module đăng ký/nhận diện, logic ca làm/chống ghi trùng; tích hợp toàn hệ thống; tổng hợp báo cáo cuối kỳ |
-| `<Thành viên 2>` | Dữ liệu, giao diện và đánh giá | Phiếu đồng ý, thu thập, làm sạch, gán nhãn, EDA; so sánh với các mô hình baseline; wireframe, màn hình chấm công và trang quản trị (Streamlit); kịch bản kiểm thử, đo kết quả trên tập test, kiểm tra công bằng |
-| `<Thành viên 3>` | Mô hình AI | Công cụ chụp ảnh thu dữ liệu; pipeline phát hiện, căn chỉnh, trích xuất đặc trưng; chọn ngưỡng; huấn luyện k-NN/SVM trên embedding; fine-tune và đánh giá MiniFASNet; tối ưu độ trễ; slide và video demo |
+| Dương Tuấn Anh | Trưởng nhóm, kiến trúc và ứng dụng | Lập kế hoạch và theo dõi WBS, khảo sát nghiệp vụ, thiết kế kiến trúc tổng thể; cơ sở dữ liệu, module webcam, module đăng ký/nhận diện, logic ca làm/chống ghi trùng; tích hợp toàn hệ thống; tổng hợp báo cáo cuối kỳ |
+| Trần Lâm Phong | Dữ liệu, giao diện và đánh giá | Phiếu đồng ý, thu thập, làm sạch, gán nhãn, EDA; so sánh với các mô hình baseline; wireframe, màn hình chấm công và trang quản trị (Streamlit); kịch bản kiểm thử, đo kết quả trên tập test, kiểm tra công bằng |
+| Bùi Như Quỳnh | Mô hình AI | Công cụ chụp ảnh thu dữ liệu; pipeline phát hiện, căn chỉnh, trích xuất đặc trưng; chọn ngưỡng; huấn luyện k-NN/SVM trên embedding; fine-tune và đánh giá MiniFASNet; tối ưu độ trễ; slide và video demo |
 
 Mọi thành viên cùng tham gia đóng góp dữ liệu khuôn mặt, kiểm thử chéo, dùng thử hệ thống và viết phần báo cáo của mình.
 
